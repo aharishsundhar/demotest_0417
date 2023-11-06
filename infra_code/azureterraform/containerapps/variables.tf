@@ -40,35 +40,45 @@ variable "env" {
 }
 
 
+# Application  apps
+variable "mysql_list" {
+  description = "acceptable values"
+  type        = map
+  default     = {
+    value1 = "admin"
+    value2 = "password"
+    port = 3306
+  }
+}
 
 
-# Container apps  service
-variable "containerapp" {
+# Container apps springapps service
+variable "springappscontainerapp" {
   description = "Container App Name"
-  default     = ""
+  default     = "springapps"
 }
-variable "targetport" {
+variable "springappstargetport" {
   description = "targetport for containerapps"
-  default = ""
+  default = "8080"
 }
-variable "exposedport" {
+variable "springappsexposedport" {
   description = "exposeport for containerapps"
-  default = ""
+  default = "8080"
 }
 
 
-# Container apps  service
-variable "containerapp" {
+# Container apps mysql service
+variable "mysqlcontainerapp" {
   description = "Container App Name"
-  default     = ""
+  default     = "mysql"
 }
-variable "targetport" {
+variable "mysqltargetport" {
   description = "targetport for containerapps"
-  default = ""
+  default = "3306"
 }
-variable "exposedport" {
+variable "mysqlexposedport" {
   description = "exposeport for containerapps"
-  default = ""
+  default = "3306"
 }
 
 

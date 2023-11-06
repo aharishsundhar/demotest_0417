@@ -29,8 +29,8 @@ resource "azurerm_container_app_environment" "example" {
 
 
 # Container apps add all files
-resource "azurerm_container_app" "" {
-  name                         = var.containerapp
+resource "azurerm_container_app" "springapps" {
+  name                         = var.springappscontainerapp
   container_app_environment_id = azurerm_container_app_environment.example.id
   resource_group_name          = azurerm_resource_group.example.name
   revision_mode                = "Single"
@@ -46,8 +46,8 @@ resource "azurerm_container_app" "" {
 
   template {
     container {
-      name   = ""
-      image  = "demotest.azurecr.io/:latest"
+      name   = "springapps"
+      image  = "demotest.azurecr.io/springapps:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }
@@ -63,7 +63,7 @@ resource "azurerm_container_app" "" {
   ingress {
     external_enabled = true
     transport        = "http"
-    target_port      = 
+    target_port      = 8080
     traffic_weight {
       percentage      = 100
       latest_revision = true
@@ -72,16 +72,16 @@ resource "azurerm_container_app" "" {
   provisioner "local-exec" {
     command = "az containerapp ingress update --name $CONTAINER_NAME --resource-group $RG --target-port $TP --exposed-port $EP --transport TCP --type external"
      environment = {
-      CONTAINER_NAME = var.containerapp
+      CONTAINER_NAME = var.springappscontainerapp
       RG = var.resource
-      TP = var.targetport
-      EP = var.exposedport
+      TP = var.springappstargetport
+      EP = var.springappsexposedport
     }
   }
 
 }
-resource "azurerm_container_app" "" {
-  name                         = var.containerapp
+resource "azurerm_container_app" "mysql" {
+  name                         = var.mysqlcontainerapp
   container_app_environment_id = azurerm_container_app_environment.example.id
   resource_group_name          = azurerm_resource_group.example.name
   revision_mode                = "Single"
@@ -97,8 +97,8 @@ resource "azurerm_container_app" "" {
 
   template {
     container {
-      name   = ""
-      image  = "demotest.azurecr.io/:latest"
+      name   = "mysql"
+      image  = "demotest.azurecr.io/mysql:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }
@@ -114,7 +114,7 @@ resource "azurerm_container_app" "" {
   ingress {
     external_enabled = true
     transport        = "http"
-    target_port      = 
+    target_port      = 3306
     traffic_weight {
       percentage      = 100
       latest_revision = true
@@ -123,10 +123,10 @@ resource "azurerm_container_app" "" {
   provisioner "local-exec" {
     command = "az containerapp ingress update --name $CONTAINER_NAME --resource-group $RG --target-port $TP --exposed-port $EP --transport TCP --type external"
      environment = {
-      CONTAINER_NAME = var.containerapp
+      CONTAINER_NAME = var.mysqlcontainerapp
       RG = var.resource
-      TP = var.targetport
-      EP = var.exposedport
+      TP = var.mysqltargetport
+      EP = var.mysqlexposedport
     }
   }
 

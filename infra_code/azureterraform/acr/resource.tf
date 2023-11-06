@@ -19,13 +19,13 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = true
   provisioner "local-exec" {
     command = [
-      "az acr build --registry $REGISTRY_NAME --image $IMAGE_NAME_ DockerfileLocation . ",
-      "az acr build --registry $REGISTRY_NAME --image $IMAGE_NAME_ DockerfileLocation . ",
+      "az acr build --registry $REGISTRY_NAME --image $IMAGE_NAME_springapps DockerfileLocation . ",
+      "az acr build --registry $REGISTRY_NAME --image $IMAGE_NAME_mysql DockerfileLocation . ",
     ]
     environment = {
       REGISTRY_NAME = var.cr
-      IMAGE_NAME_  = ""
-      IMAGE_NAME_  = ""
+      IMAGE_NAME_springapps  = "springapps"
+      IMAGE_NAME_mysql  = "mysql"
     }
   }
 }
